@@ -1,0 +1,16 @@
+---
+# create a redis server and web server and connect them together
+
+version: '3'                  # of docker compose
+services:                     # type of container
+  redis-server:
+    # image: 'pataraco/redis'
+    image: 'redis'
+  node-app:
+    restart: on-failure
+    # image: 'pataraco/counting-web'
+    build: .
+    ports:
+      - "8082:8082"
+# restart policies
+# no (default), always, on-failure, unless-stopped
