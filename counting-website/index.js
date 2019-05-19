@@ -1,3 +1,4 @@
+// displays/counts visits to the website using redis
 const express = require('express');
 const redis = require('redis');
 const process = require('process');
