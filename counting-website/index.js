@@ -10,7 +10,7 @@ const port = 8082;
 client.set('visits', 0);
 
 app.get('/', (req, res) => {
-  process.exit(0);
+  // process.exit(1);
   client.get('visits', (err, visits) => {
     client.set('visits', parseInt(visits) + 1);
     res.send('Number of visits: [' + visits + ']');
