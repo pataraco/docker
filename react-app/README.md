@@ -16,4 +16,6 @@
        -v /var/local/app/node_modules \  # don't map volume, use container's
        -v $(pwd):/var/local/app \        # map server volume to container's
        -p 8083:3000 IMAGE
+11. docker-compose up
+12. docker exec -it frontend_react-app_1 npm test
 
