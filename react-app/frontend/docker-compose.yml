@@ -11,3 +11,11 @@ services:                     # type of container
     volumes:
       - /var/local/app/node_modules  # use container's volume
       - .:/var/local/app             # map current to container's
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /var/local/app/node_modules  # use container's volume
+      - .:/var/local/app             # map current to container's
+    command: ["npm", "test"]
