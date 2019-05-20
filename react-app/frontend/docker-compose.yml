@@ -1,0 +1,13 @@
+---
+# create a simple react/web server
+version: '3'                  # of docker compose
+# working_dir: &wd /var/local/app
+services:                     # type of container
+  react-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports: ["8083:3000"]
+    volumes:
+      - /var/local/app/node_modules  # use container's volume
+      - .:/var/local/app             # map current to container's
