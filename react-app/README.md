@@ -1,5 +1,10 @@
 # react app 
 
+Messing around with Docker.
+
+This project works with docker to test, build and start a simple react app and
+also uses Jenkins to auto deploy.
+
 ## setup/use
  1. brew install node
  2. npm install -g create-react-app
