@@ -9,14 +9,12 @@ pipeline {
             // }
             steps {
                 echo 'Building...'
-                sh 'echo "Hello World!"'
                 sh '''
-                    uname -a
-                    date
+                    echo "changing working dir..."
+		    cd react-app/frontend
+                    echo "building docker app..."
+                    docker build -t pataraco/react-app -f Dockerfile.dev .
                 '''
-                /* sh 'python --version' */ /* python not found in Alpine docker image */
-                /* sh 'echo "${env.ATONG_PUB_SSH}"' */
-                // sh 'echo "$ATONG_PUB_SSH"'
             }
         }
         stage('test') {
