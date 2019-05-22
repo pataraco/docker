@@ -1,9 +1,11 @@
 pipeline {
-    agent {
-        docker { image 'node:alpine' }
-    }
+    // agent {
+    //     docker { image 'node:alpine' }
+    // }
+    agent none
     stages {
         stage('build') {
+	    agent { docker 'node:alpine' }
             // environment {
             //     ATONG_PUB_SSH = credentials('ATONG_PUB_SSH')
             // }
@@ -18,16 +20,18 @@ pipeline {
             }
         }
         stage('test') {
+	    agent { docker 'node:alpine' }
             steps {
                 echo 'Testing...'
                 timeout(time: 3, unit: 'MINUTES') {
                     retry(5) {
-                        sh 'node --version'
+                        sh 'docker run pataraco/react-app npm run test -- --coverage'
                     }
                 }
             }
         }
         stage('deploy (staging)') {
+	    agent { docker 'node:alpine' }
             steps {
                 echo 'Deploying Staging...'
             }
@@ -38,6 +42,7 @@ pipeline {
         //     }
         // }
         stage('deploy (production)') {
+	    agent { docker 'node:alpine' }
             steps {
                 echo 'Deploying Production...'
             }
