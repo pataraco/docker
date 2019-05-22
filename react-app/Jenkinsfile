@@ -34,11 +34,11 @@ pipeline {
                 echo 'Deploying Staging...'
             }
         }
-        stage('sanity check') {
-            steps {
-                input "Did QA sign off on Staging?"
-            }
-        }
+        // stage('sanity check') {
+        //     steps {
+        //         input "Did QA sign off on Staging?"
+        //     }
+        // }
         stage('deploy (production)') {
             steps {
                 echo 'Deploying Production...'
