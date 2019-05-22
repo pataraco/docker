@@ -2,10 +2,11 @@ pipeline {
     // agent {
     //     docker { image 'node:alpine' }
     // }
-    agent none
+    // agent none
+    agent any
     stages {
         stage('build') {
-	    agent { docker 'node:alpine' }
+	    // agent { docker 'node:alpine' }
             // environment {
             //     ATONG_PUB_SSH = credentials('ATONG_PUB_SSH')
             // }
@@ -20,7 +21,7 @@ pipeline {
             }
         }
         stage('test') {
-	    agent { docker 'node:alpine' }
+	    // agent { docker 'node:alpine' }
             steps {
                 echo 'Testing...'
                 timeout(time: 3, unit: 'MINUTES') {
@@ -31,7 +32,7 @@ pipeline {
             }
         }
         stage('deploy (staging)') {
-	    agent { docker 'node:alpine' }
+	    // agent { docker 'node:alpine' }
             steps {
                 echo 'Deploying Staging...'
             }
@@ -42,7 +43,7 @@ pipeline {
         //     }
         // }
         stage('deploy (production)') {
-	    agent { docker 'node:alpine' }
+	    // agent { docker 'node:alpine' }
             steps {
                 echo 'Deploying Production...'
             }
