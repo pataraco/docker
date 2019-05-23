@@ -26,7 +26,7 @@ pipeline {
                 echo 'Testing...'
                 timeout(time: 3, unit: 'MINUTES') {
                     retry(5) {
-                        sh 'docker run pataraco/react-app npm run test -- --coverage'
+                        sh 'docker run -e CI=true pataraco/react-app npm test -- --coverage'
                     }
                 }
             }
