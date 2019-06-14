@@ -32,9 +32,9 @@ pipeline {
             }
         }
         stage('deploy (staging)') {
-            when {
-                branch 'master'
-            }
+            // when {
+            //     branch 'master'
+            // }
             // agent { docker 'node:alpine' }
             steps {
                 echo 'Deploying Staging...'
