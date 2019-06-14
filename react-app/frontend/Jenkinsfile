@@ -6,7 +6,7 @@ pipeline {
     agent any
     stages {
         stage('build') {
-	    // agent { docker 'node:alpine' }
+            // agent { docker 'node:alpine' }
             // environment {
             //     ATONG_PUB_SSH = credentials('ATONG_PUB_SSH')
             // }
@@ -14,14 +14,14 @@ pipeline {
                 echo 'Building...'
                 sh '''
                     echo "changing working dir..."
-		    cd react-app/frontend
+                    cd react-app/frontend
                     echo "building docker app..."
                     docker build -t pataraco/react-app -f Dockerfile.dev .
                 '''
             }
         }
         stage('test') {
-	    // agent { docker 'node:alpine' }
+            // agent { docker 'node:alpine' }
             steps {
                 echo 'Testing...'
                 timeout(time: 3, unit: 'MINUTES') {
@@ -32,9 +32,19 @@ pipeline {
             }
         }
         stage('deploy (staging)') {
-	    // agent { docker 'node:alpine' }
+            when {
+                branch 'master'
+            }
+            // agent { docker 'node:alpine' }
             steps {
                 echo 'Deploying Staging...'
+		aws s3 ls
+                // region: us-east-1
+                // app:    docker-react-app
+                // env:    DockerReactApp-env
+                // bucket: elasticbeanstalk-us-east-1-846715253217
+                // key:    docker-react-app
+                // branch: master
             }
         }
         // stage('sanity check') {
@@ -43,7 +53,7 @@ pipeline {
         //     }
         // }
         stage('deploy (production)') {
-	    // agent { docker 'node:alpine' }
+            // agent { docker 'node:alpine' }
             steps {
                 echo 'Deploying Production...'
             }
