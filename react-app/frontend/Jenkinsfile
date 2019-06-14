@@ -38,7 +38,7 @@ pipeline {
             agent { docker 'node:alpine' }
             steps {
                 echo 'Deploying Staging...'
-		sh 'aws s3 ls'
+                sh '/usr/local/bin/aws s3 ls'
                 // region: us-east-1
                 // app:    docker-react-app
                 // env:    DockerReactApp-env
