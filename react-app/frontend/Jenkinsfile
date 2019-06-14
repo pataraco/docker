@@ -32,10 +32,10 @@ pipeline {
             }
         }
         stage('deploy (staging)') {
-            // when {
-            //     branch 'master'
-            // }
-            // agent { docker 'node:alpine' }
+            when {
+                branch 'master'
+            }
+            agent { docker 'node:alpine' }
             steps {
                 echo 'Deploying Staging...'
 		sh 'aws s3 ls'
