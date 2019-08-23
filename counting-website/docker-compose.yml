@@ -7,10 +7,10 @@ services:                     # type of container
     # image: 'pataraco/redis'
     image: 'redis'
   node-app:
-    restart: "unless-stopped"
+    restart: 'unless-stopped'
     # image: 'pataraco/counting-web'
     build: .
     ports:
-      - "8082:8082"
+      - '8082:8082'
 # restart policies
 # no (default), always, on-failure, unless-stopped
