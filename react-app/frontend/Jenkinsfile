@@ -14,7 +14,8 @@ pipeline {
                 echo 'git environment variables...'
                 echo "  GIT_BRANCH $GIT_BRANCH"
                 echo "  GIT_URL $GIT_URL"
-                echo "  branch $branch"
+                echo "  BRANCH_NAME $BRANCH_NAME"
+                echo "  CHANGE_ID $CHANGE_ID"
                 echo 'Building...'
                 sh '''
                     # env | grep GIT
