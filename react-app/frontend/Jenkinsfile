@@ -32,6 +32,11 @@ pipeline {
             }
         }
         stage('deploy (staging)') {
+            echo GIT_BRANCH %GIT_BRANCH%
+            echo GIT_LOCAL_BRANCH %GIT_LOCAL_BRANCH%
+            echo GIT_URL %GIT_URL%
+            echo GIT_AUTHOR_NAME %GIT_AUTHOR_NAME%
+            echo GIT_COMMITTER_EMAIL %GIT_COMMITTER_EMAIL%
             when {
                 branch 'origin/master'
             }
@@ -65,7 +70,7 @@ pipeline {
     post {
         always {    /* this will always run */
             echo "All done!  8)"
-	    // The archive step is deprecated, please use archiveArtifacts instead.
+            // The archive step is deprecated, please use archiveArtifacts instead.
             // /* collect test results and artifacts */
             // archive 'build/libs/**/*.jar'  /* grab built artifacts for local analysis/investigation */
             // hipchatSend room: 'Project Staging',
