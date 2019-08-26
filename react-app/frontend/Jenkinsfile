@@ -33,7 +33,7 @@ pipeline {
         }
         stage('deploy (staging)') {
             when {
-                branch 'master'
+                branch 'origin/master'
             }
             // agent { docker 'node:alpine' }
             steps {
@@ -54,6 +54,9 @@ pipeline {
         // }
         stage('deploy (production)') {
             // agent { docker 'node:alpine' }
+            when {
+                branch 'origin/master'
+            }
             steps {
                 echo 'Deploying Production...'
             }
