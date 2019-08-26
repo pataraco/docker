@@ -10,13 +10,13 @@ function App() {
         <p>
           <i> Yo, yo, yo! </i>
         </p>
-        <hr />
+        <hr color="blue" size="3" width="50%"/>
         <p>
           You can change the file "<code>src/App.js</code>" to customize this page.
 	  <br />
           Then <b>save</b> to update.
         </p>
-        <hr />
+        <hr color="green" size="5" width="100"/>
         <a
           className="App-link"
           href="https://reactjs.org"
