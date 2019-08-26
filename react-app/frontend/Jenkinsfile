@@ -18,7 +18,7 @@ pipeline {
                 echo "  CHANGE_ID $CHANGE_ID"
                 echo 'Building...'
                 sh '''
-                    # env | grep GIT
+                    env | grep GIT
                     cd react-app/frontend
                     docker build -t pataraco/react-app:dev -f Dockerfile.dev .
                 '''
