@@ -14,13 +14,12 @@ pipeline {
                 echo 'git environment variables...'
                 echo "  GIT_BRANCH $GIT_BRANCH"
                 echo "  GIT_URL $GIT_URL"
-                echo "  GIT_AUTHOR_NAME $GIT_AUTHOR_NAME"
-                echo "  GIT_COMMITTER_EMAIL $GIT_COMMITTER_EMAIL"
+                // echo "  GIT_AUTHOR_NAME $GIT_AUTHOR_NAME"
+                // echo "  GIT_COMMITTER_EMAIL $GIT_COMMITTER_EMAIL"
                 echo 'Building...'
                 sh '''
-                    echo "changing working dir..."
+                    env | grep GIT
                     cd react-app/frontend
-                    echo "building docker app..."
                     docker build -t pataraco/react-app:dev -f Dockerfile.dev .
                 '''
             }
