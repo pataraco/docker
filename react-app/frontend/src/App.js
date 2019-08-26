@@ -9,12 +9,14 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           <i> Yo, yo, yo! </i>
-          <hr />
+        </p>
+        <hr />
+        <p>
           You can change the file "<code>src/App.js</code>" to customize this page.
 	  <br />
           Then <b>save</b> to update.
-          <hr />
         </p>
+        <hr />
         <a
           className="App-link"
           href="https://reactjs.org"
