@@ -61,8 +61,8 @@ pipeline {
             }
             steps {
                 echo 'Deploying Production...'
-                sh '/Users/patrickraco/.ebcli-virtual-env/executables/eb init docker-react-app -p docker-18.06.1-ce -r us-east-1'
-                sh '/Users/patrickraco/.ebcli-virtual-env/executables/eb deploy docker-react-app-prod'
+                // sh '/usr/local/bin/eb init docker-react-app -p docker-18.06.1-ce -r us-east-1'
+                sh 'cd react-app/frontend; /usr/local/bin/eb deploy docker-react-app-prod'
             }
         }
     }
