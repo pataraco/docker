@@ -61,6 +61,7 @@ pipeline {
             }
             steps {
                 echo 'Deploying Production...'
+                sh '/Users/patrickraco/.ebcli-virtual-env/executables/eb init docker-react-app -r us-east-1'
                 sh '/Users/patrickraco/.ebcli-virtual-env/executables/eb deploy --staged'
             }
         }
