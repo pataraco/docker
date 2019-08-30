@@ -8,8 +8,7 @@ environment-defaults:
 global:
   application_name: docker-react-app
   default_ec2_keyname: null
-  default_platform: arn:aws:elasticbeanstalk:us-east-1::platform/Docker running on
-    64bit Amazon Linux/2.12.16
+  default_platform: docker-18.06.1-ce
   default_region: us-east-1
   include_git_submodules: true
   instance_profile: null
