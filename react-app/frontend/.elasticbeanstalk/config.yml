@@ -1,0 +1,20 @@
+branch-defaults:
+  default:
+    environment: docker-react-app-dev
+environment-defaults:
+  docker-react-app-dev:
+    branch: null
+    repository: null
+global:
+  application_name: docker-react-app
+  default_ec2_keyname: null
+  default_platform: arn:aws:elasticbeanstalk:us-east-1::platform/Docker running on
+    64bit Amazon Linux/2.12.16
+  default_region: us-east-1
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: jenkins
+  sc: null
+  workspace_type: Application
