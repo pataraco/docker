@@ -24,4 +24,6 @@ also uses Jenkins to auto deploy.
        -p 8083:3000 IMAGE
 12. docker-compose up
 13. docker exec -it frontend_react-app_1 npm test
-
+14. install [AWS ElasticBeanstalk CLI (eb)](https://github.com/aws/aws-elastic-beanstalk-cli-setup.git)
+15. initialize the EB environment: `eb init [--profile PROFILE]`
+16. deploy to EB: `eb deploy [--staged]`

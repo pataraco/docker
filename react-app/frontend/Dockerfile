@@ -21,4 +21,8 @@ FROM nginx:alpine
 # copy remaining config files over
 # note: remapped by docker-compose, not really needed, but saved for reference
 COPY --from=builder /var/local/app/build /usr/share/nginx/html
+
+# expose the port on the container
+EXPOSE 80
+
 # no CMD needed, automatically started up / configured by the image
