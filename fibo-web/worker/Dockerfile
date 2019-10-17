@@ -17,5 +17,5 @@ RUN npm install
 COPY . .
 
 # tell the image to run the server when it starts as a container
+# as defined as "scripts" in the "package.json" file
 CMD ["npm", "run", "start"]
-# or 'CMD ["npm", "start']' - same thang

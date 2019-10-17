@@ -1,0 +1,62 @@
+pipeline {
+    agent any
+    stages {
+        stage('build') {
+            steps {
+                echo 'git environment variables...'
+                echo '  GIT_BRANCH $GIT_BRANCH'
+                echo '  GIT_URL $GIT_URL'
+                echo '  BRANCH_NAME $BRANCH_NAME'
+                echo 'Building...'
+                sh '''
+                    env | grep GIT
+                    cd react-app/frontend
+                    docker build -t pataraco/react-app:dev -f Dockerfile.dev .
+                '''
+            }
+        }
+        stage('test') {
+            steps {
+                echo 'Testing...'
+                timeout(time: 3, unit: 'MINUTES') {
+                    retry(5) {
+                        sh 'docker run -e CI=true pataraco/react-app:dev npm test -- --coverage'
+                    }
+                }
+            }
+        }
+        stage('deploy (staging)') {
+            when { branch 'master' }
+            steps {
+                echo 'Deploying Staging...'
+                sh '/usr/local/bin/aws s3 ls'
+            }
+        }
+        stage('deploy (production)') {
+            when {
+                branch 'master'
+            }
+            steps {
+                echo 'Deploying Production...'
+                sh 'cd react-app/frontend; /usr/local/bin/eb deploy docker-react-app-prod'
+            }
+        }
+    }
+    post {
+        always {    /* this will always run */
+            echo 'All done!  8)'
+        }
+        success {    /* runs when successful */
+            echo 'Pipeline succeeded!  :)'
+        }
+        unstable {    /*  runs when marked as unstable */
+            echo 'Pipeline is unstable.  :/'
+        }
+        failure {    /* runs if failed */
+            echo 'Pipeline failed!  :('
+        }
+        changed {    /* runs if state of Pipeline has changed, e.g. previously failed, but now succeeded */
+            echo 'Pipeline status changed.  :|'
+        }
+    }
+}

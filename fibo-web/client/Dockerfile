@@ -1,5 +1,5 @@
 # start with alpine (base) image
-FROM node:alpine
+FROM node:alpine as build_phase
 
 # set working directory to not conflict
 WORKDIR /var/local/app
@@ -17,5 +17,18 @@ RUN npm install
 COPY . .
 
 # tell the image to run the server when it starts as a container
-CMD ["npm", "run", "start"]
-# or 'CMD ["npm", "start']' - same thang
+CMD ["npm", "run", "build"]
+
+# start a second phase
+
+# start with nginx (base) image
+FROM nginx
+
+# expose listening port
+EXPOSE 3000
+
+# copy default nginx conf file
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+
+# copy files from build phase
+COPY --from=build_phase /var/local/app/build /usr/share/nginx/html
