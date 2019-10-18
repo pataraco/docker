@@ -1,35 +1,43 @@
 pipeline {
     agent any
     stages {
-        stage('build') {
+        stage('info') {
             steps {
                 echo "git environment variables..."
                 echo "  GIT_BRANCH $GIT_BRANCH"
                 echo "  GIT_URL $GIT_URL"
                 echo "  BRANCH_NAME $BRANCH_NAME"
+                sh 'env | grep GIT'
+            }
+        }
+        stage('build') {
+            steps {
                 echo "Building..."
+                echo "TODO: Correctly configure -> Builds..."
                 sh '''
-                    env | grep GIT
-                    cd react-app/frontend
-                    docker build -t pataraco/react-app:dev -f Dockerfile.dev .
+                    cd fibo-web
+                    # docker build -t pataraco/react-app:dev -f Dockerfile.dev .
                 '''
             }
         }
         stage('test') {
             steps {
                 echo "Testing..."
-                timeout(time: 3, unit: 'MINUTES') {
-                    retry(5) {
-                        sh 'docker run -e CI=true pataraco/react-app:dev npm test -- --coverage'
-                    }
-                }
+                echo "AWS access..."
+                sh '/usr/local/bin/aws sts get-caller-identity'
+                echo "TODO: Correctly configure -> Dev Tests..."
+                # timeout(time: 3, unit: 'MINUTES') {
+                #     retry(5) {
+                #         sh 'docker run -e CI=true pataraco/react-app:dev npm test -- --coverage'
+                #     }
+                # }
             }
         }
         stage('deploy (staging)') {
-            when { branch 'master' }
+            when { branch 'staging' }
             steps {
                 echo "Deploying Staging..."
-                sh '/usr/local/bin/aws s3 ls'
+                echo "TODO: Correctly configure -> Deploying Staging..."
             }
         }
         stage('deploy (production)') {
@@ -38,7 +46,8 @@ pipeline {
             }
             steps {
                 echo "Deploying Production..."
-                sh 'cd react-app/frontend; /usr/local/bin/eb deploy docker-react-app-prod'
+                echo "TODO: Correctly configure -> Deploying Production..."
+                # TODO # sh 'cd fibo-web; /usr/local/bin/eb deploy docker-fibo-app-prod'
             }
         }
     }
