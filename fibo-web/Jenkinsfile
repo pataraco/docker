@@ -10,27 +10,55 @@ pipeline {
                 sh 'env | grep GIT'
             }
         }
-        stage('build') {
+        stage('build (dev)') {
             steps {
-                echo "Building..."
-                echo "TODO: Correctly configure -> Builds..."
+                echo "Building (dev)..."
+                echo "React Client..."
+                // sh '''
+                //     cd fibo-web
+                //     docker build -t pataraco/fibo-web-app-client:dev -f client/Dockerfile.dev client
+                // '''
                 sh '''
-                    cd fibo-web
-                    # docker build -t pataraco/react-app:dev -f Dockerfile.dev .
+                    cd fibo-web/client
+                    docker build -t pataraco/fibo-web-app-client:dev -f Dockerfile.dev .
                 '''
+                echo "TODO: Build others for testing purposes..."
             }
         }
         stage('test') {
             steps {
                 echo "Testing..."
-                echo "AWS access..."
+                echo "AWS access test(s)..."
                 sh '/usr/local/bin/aws sts get-caller-identity'
-                echo "TODO: Correctly configure -> Dev Tests..."
-                // timeout(time: 3, unit: 'MINUTES') {
-                //     retry(5) {
-                //         sh 'docker run -e CI=true pataraco/react-app:dev npm test -- --coverage'
-                //     }
-                // }
+                echo "React Client test(s)..."
+                timeout(time: 3, unit: 'MINUTES') {
+                    retry(5) {
+                        sh 'docker run -e CI=true pataraco/fibo-web-app-client:dev npm test -- --coverage'
+                    }
+                }
+                echo "TODO: Nginx server test(s)..."
+                echo "TODO: Express server test(s)..."
+                echo "TODO: Redis worker test(s)..."
+            }
+        }
+        stage('build (deploy)') {
+            steps {
+                echo "Building Images..."
+                sh '''
+                    cd fibo-web
+                    docker build -t pataraco/fibo-web-app-client:latest client
+                    docker build -t pataraco/fibo-web-app-server:latest server
+                    docker build -t pataraco/fibo-web-app-nginx:latest nginx
+                    docker build -t pataraco/fibo-web-app-worker:latest worker
+                '''
+                echo "Pushing Images (Docker Hub)..."
+                sh '''
+		    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+                    docker push pataraco/fibo-web-app-client:latest
+                    docker push pataraco/fibo-web-app-server:latest
+                    docker push pataraco/fibo-web-app-nginx:latest
+                    docker push pataraco/fibo-web-app-worker:latest
+                '''
             }
         }
         stage('deploy (staging)') {
