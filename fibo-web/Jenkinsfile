@@ -53,7 +53,7 @@ pipeline {
                 '''
                 echo "Pushing Images (Docker Hub)..."
                 sh '''
-		    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+		    docker login --username $DOCKER_USERNAME --password-stdin <<< $DOCKER_PASSWORD
                     docker push pataraco/fibo-web-app-client:latest
                     docker push pataraco/fibo-web-app-server:latest
                     docker push pataraco/fibo-web-app-nginx:latest
