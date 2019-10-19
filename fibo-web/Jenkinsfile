@@ -74,8 +74,7 @@ pipeline {
             }
             steps {
                 echo "Deploying Production..."
-                echo "TODO: Correctly configure -> Deploying Production..."
-                // TODO // sh 'cd fibo-web; /usr/local/bin/eb deploy docker-fibo-app-prod'
+                sh 'cd fibo-web; /usr/local/bin/eb deploy FiboWebApp-env'
             }
         }
     }
