@@ -17,7 +17,7 @@
         "fibo-web-client",
         "fibo-web-server"
       ],
-      "memory": 256
+      "memory": 256,
       "portMappings": [
         {
           "hostPort": 80,
