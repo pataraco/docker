@@ -32,13 +32,16 @@ These steps are not exact. Derived from a previous app (React App) from the same
 ### AWS config
 
  1. ElasticBeanstalk
-   * Create the app and env (multidocker)
-   * Set up environment variables (as in docker-compose.yml)
+   * Create the app and env (web server / multi-container docker)
+   * Set up environment variables (Dockerrun.aws.json with resources below)
  2. AWS RDS (PostgreSQL)
-   * Create an RDS DB
+   * Create an RDS DB (Dev/Test) (credentials/db name to match Dockerrun.aws.json)
+     - small burstable instance, minimal memory and disk space
+     - no extra anything, automatic backups, multi-az, enhanced monitoring
    * Create a AWS SG for PostgreSQL
  3. AWS Elastic Cache (Redis)
    * Create a Redis Cluster
+     - zero replicas, no automatic backups
    * Create a AWS SG for Redis
 
 ### ElasticBeanstalk CLI

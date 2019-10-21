@@ -74,7 +74,7 @@ pipeline {
             }
             steps {
                 echo "Deploying Production..."
-                sh 'cd fibo-web; /usr/local/bin/eb deploy FiboWebApp-env'
+                sh 'cd fibo-web; /usr/local/bin/eb deploy fibo-web-app-env'
             }
         }
     }
