@@ -6,7 +6,7 @@
       "image": "pataraco/fibo-web-app-client",
       "essential": false,
       "hostname": "fibo-client",
-      "memory": 4
+      "memory": 256
     },
     {
       "name": "fibo-web-nginx",
@@ -17,7 +17,7 @@
         "fibo-web-client",
         "fibo-web-server"
       ],
-      "memory": 4,
+      "memory": 256
       "portMappings": [
         {
           "hostPort": 80,
@@ -60,7 +60,7 @@
       ],
       "essential": false,
       "hostname": "fibo-server-api",
-      "memory": 4
+      "memory": 256
     },
     {
       "name": "fibo-web-worker",
@@ -77,7 +77,7 @@
       ],
       "essential": false,
       "hostname": "fibo-worker",
-      "memory": 4
+      "memory": 256
     }
   ]
 }
