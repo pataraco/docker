@@ -28,14 +28,27 @@ pipeline {
         stage('test') {
             steps {
                 echo "Testing..."
+
                 echo "AWS access test(s)..."
                 sh '/usr/local/bin/aws sts get-caller-identity'
+
+                echo "AWS Elastic Beanstalk access/init test(s)..."
+                sh '''
+                   cd fibo-web
+                   /usr/local/bin/eb status
+                   if [ $? -ne 0 ]; then
+                      /usr/local/bin/eb init fibo-web-app -p docker-18.06.1-ce -r us-east-1 --profile jenkins
+                   fi
+                '''
+                sh '/usr/local/bin/eb status'
+
                 echo "React Client test(s)..."
                 timeout(time: 3, unit: 'MINUTES') {
                     retry(5) {
                         sh 'docker run -e CI=true pataraco/fibo-web-app-client:dev npm test -- --coverage'
                     }
                 }
+
                 echo "TODO: Nginx server test(s)..."
                 echo "TODO: Express server test(s)..."
                 echo "TODO: Redis worker test(s)..."
@@ -53,7 +66,7 @@ pipeline {
                 '''
                 echo "Pushing Images (Docker Hub)..."
                 sh '''
-		    docker login --username $DOCKER_USERNAME --password-stdin <<< $DOCKER_PASSWORD
+                    docker login --username $DOCKER_USERNAME --password-stdin <<< $DOCKER_PASSWORD
                     docker push pataraco/fibo-web-app-client:latest
                     docker push pataraco/fibo-web-app-server:latest
                     docker push pataraco/fibo-web-app-nginx:latest
