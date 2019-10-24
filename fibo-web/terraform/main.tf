@@ -1,6 +1,11 @@
 # Creates data lookups and common resources
 #
 
+terraform {
+  backend "local" { }
+  required_version = ">= 0.12.0"
+}
+
 provider "aws" {
   region = "us-east-1"
 }
@@ -40,10 +45,38 @@ resource "aws_security_group" "redis" {
 resource "aws_security_group_rule" "redis" {
   type                     = "ingress"
   description              = "Redis"
-  from_port                = 6379
-  to_port                  = 6379
+  from_port                = aws_elasticache_cluster.ec_redis.cache_nodes.0.port
+  to_port                  = aws_elasticache_cluster.ec_redis.cache_nodes.0.port
   protocol                 = "tcp"
   security_group_id        = aws_security_group.redis.id
-  self                     = true
+  source_security_group_id = module.eb_env.security_group_id
+}
+
+resource "aws_security_group" "rds" {
+  name        = "fibo-web-app-rds"
+  description = "Allow Redis inbound traffic from EB Cluster"
+  vpc_id      = data.aws_vpc.default.id
+
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    cidr_blocks     = ["0.0.0.0/0"]
+    description     = "To Any"
+  }
+
+  tags = {
+    Name        = "fibo-web-app-rds"
+    Environment = "dev"
+  }
+}
+
+resource "aws_security_group_rule" "rds" {
+  type                     = "ingress"
+  description              = "RDS"
+  from_port                = module.rds_postgres.this_db_instance_port
+  to_port                  = module.rds_postgres.this_db_instance_port
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.rds.id
   source_security_group_id = module.eb_env.security_group_id
 }

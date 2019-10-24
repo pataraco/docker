@@ -29,22 +29,31 @@ These steps are not exact. Derived from a previous app (React App) from the same
    * specify the correct Jenkinsfile
    * set up the GitHub creds (username/password) standard or Pers Access Token
 
-### AWS config
+### AWS infra config
 
- 1. ElasticBeanstalk
+#### Automated via Terraform
+
+ 1. Change working directory to `terraform`
+   * `cd terraform`
+ 2. Apply the `terraform` configurations (may need to run `terraform init` first)
+   * `terraform apply`
+
+#### Manually via AWS Console
+
+ 1. AWS Elastic Beanstalk (Application and Environment)
    * Create the app and env (web server / multi-container docker)
    * Set up environment variables (Dockerrun.aws.json with resources below)
- 2. AWS RDS (PostgreSQL)
+ 2. Amazon RDS (PostgreSQL)
    * Create an RDS DB (Dev/Test) (credentials/db name to match Dockerrun.aws.json)
      - small burstable instance, minimal memory and disk space
      - no extra anything, automatic backups, multi-az, enhanced monitoring
    * Create a AWS SG for PostgreSQL
- 3. AWS Elastic Cache (Redis)
+ 3. Amazon ElastiCache (Redis)
    * Create a Redis Cluster
      - zero replicas, no automatic backups
    * Create a AWS SG for Redis
 
-### ElasticBeanstalk CLI
+### AWS Elastic Beanstalk CLI (eb)
 
  1. install [AWS ElasticBeanstalk CLI (eb)](https://github.com/aws/aws-elastic-beanstalk-cli-setup.git)
  2. initialize the EB environment: `eb init [--profile PROFILE]`
