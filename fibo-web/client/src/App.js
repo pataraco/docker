@@ -16,11 +16,11 @@ class App extends Component {
               Welcome to Fibonacci Calculator!
               <br/>
               <font size="3">(
-                Powered by: <Link to="https://reactjs.org/">React</Link>,
-                Created with: <Link to="https://www.terraform.io/">Terraform</Link> & <Link to="https://jenkins.io/">Jenkins</Link>,
-                Hosted on: <Link to="https://aws.amazon.com/">AWS</Link>,
-                Training/Project from: <Link to="https://www.udemy.com/course/docker-and-kubernetes-the-complete-guide/">Udemy</Link>,
-                Source files: <Link to="https://github.com/pataraco/docker/tree/master/fibo-web">GitHub</Link>
+                Powered by: <a href="https://reactjs.org/">React</a> |
+                Created with: <a href="https://www.terraform.io/">Terraform</a> & <a href="https://jenkins.io/">Jenkins</a> |
+                Hosted on: <a href="https://aws.amazon.com/">AWS</a> |
+                Training/Project from: <a href="https://www.udemy.com/course/docker-and-kubernetes-the-complete-guide/">Udemy</a> |
+                Source files: <a href="https://github.com/pataraco/docker/tree/master/fibo-web">GitHub</a>
               )</font>
             </h1>
             | <Link to="/">Home</Link> |

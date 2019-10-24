@@ -13,7 +13,7 @@ services:                     # type of container
       context: ./nginx
     ports:
       - 8085:80
-  fibo-server:
+  fibo-web-server:
     build:
       dockerfile: Dockerfile.dev
       context: ./server
@@ -28,7 +28,7 @@ services:                     # type of container
     volumes:
       - /var/local/app/node_modules  # use container's volume
       - ./server:/var/local/app      # map current to container's
-  fibo-client:
+  fibo-web-client:
     build:
       dockerfile: Dockerfile.dev
       context: ./client
