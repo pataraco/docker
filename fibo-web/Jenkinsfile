@@ -35,12 +35,12 @@ pipeline {
                 echo "AWS Elastic Beanstalk access/init test(s)..."
                 sh '''
                    cd fibo-web
-                   /usr/local/bin/eb status
+                   eb_status=$(/usr/local/bin/eb status 2>&1)
                    if [ $? -ne 0 ]; then
                       /usr/local/bin/eb init fibo-web-app -p docker-18.06.1-ce -r us-east-1 --profile jenkins
                    fi
                 '''
-                sh '/usr/local/bin/eb status'
+                sh 'cd fibo-web; /usr/local/bin/eb status'
 
                 echo "React Client test(s)..."
                 timeout(time: 3, unit: 'MINUTES') {
