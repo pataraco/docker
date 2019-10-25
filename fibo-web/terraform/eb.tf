@@ -41,7 +41,7 @@ module "eb_env" {
   root_volume_size                   = 20
   root_volume_type                   = "gp2"
   solution_stack_name                = "64bit Amazon Linux 2018.03 v2.17.0 running Multi-container Docker 18.06.1-ce (Generic)"
-  tier                               = "WebServer"  # default (WebServer or Worker)
+  tier                               = "WebServer" # default (WebServer or Worker)
   updating_min_in_service            = 0
   vpc_id                             = data.aws_vpc.default.id
 }
@@ -51,20 +51,20 @@ module "eb_env" {
 
 output "eb_app_name" {
   description = "AWS Elastic Beanstalk Application name"
-  value       = "${module.eb_app.elastic_beanstalk_application_name}"
+  value       = module.eb_app.elastic_beanstalk_application_name
 }
 
 output "eb_env_name" {
   description = "AWS Elastic Beanstalk Application Environment name"
-  value       = "${module.eb_env.name}"
+  value       = module.eb_env.name
 }
 
 output "eb_env_endpoint" {
   description = "Fully qualified DNS name for the environment"
-  value       = "${module.eb_env.endpoint}"
+  value       = module.eb_env.endpoint
 }
 
 output "eb_env_security_group_id" {
   description = "Security Group ID of the Environment"
-  value       = "${module.eb_env.security_group_id}"
+  value       = module.eb_env.security_group_id
 }
