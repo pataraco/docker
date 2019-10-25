@@ -2,12 +2,22 @@
 
 Messing around with Docker some more.
 
-This project works with docker to test, build and start a unessisarily complex app to work with multiple containers and integrating them.
+This project works with docker to test, build and start an unnecessarily complex app to work with multiple containers and integrating them.
 
-(Based on the Udemy course: "Docer and Kubernetes: The Complete Guide" by XXX starting at Section 8: "Building a Multi-Container Application"
+Based on the Udemy course:
+[Docker and Kubernetes: The Complete Guide](https://www.udemy.com/course/docker-and-kubernetes-the-complete-guide)
+by [Stephen Grider](https://www.udemy.com/user/sgslo/)
+starting at *Section 8: "Building a Multi-Container Application"*
 
-## setup/use
-These steps are not exact. Derived from a previous app (React App) from the same Udemy course.
+## quick start
+**Note**: The `terraform` configs are specific to my environment. You'll have to change the "hard-coded" values (that's right - I didn't parameterize! :-p)
+
+ 1. clone the repo
+ 2. run `terraform init` & `terraform apply` in `terraform` directory
+ 3. run `eb init` & `eb deploy` in `fibo-web` directory
+
+## detailed setup/configuration/use
+**Note**: These steps are not exact. Derived from a previous app (React App) from the same Udemy course.
 
 ### local dev
 
@@ -31,14 +41,14 @@ These steps are not exact. Derived from a previous app (React App) from the same
 
 ### AWS infra config
 
-#### Automated via Terraform
+#### automated via Terraform
 
  1. Change working directory to `terraform`
    * `cd terraform`
  2. Apply the `terraform` configurations (may need to run `terraform init` first)
    * `terraform apply`
 
-#### Manually via AWS Console
+#### manually via AWS Console
 
  1. AWS Elastic Beanstalk (Application and Environment)
    * Create the app and env (web server / multi-container docker)
