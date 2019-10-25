@@ -12,7 +12,7 @@ module "rds_postgres" {
   version = "~> 2.0"
 
   allocated_storage       = 10
-  backup_retention_period = 0  # disable backups to create DB faster
+  backup_retention_period = 0 # disable backups to create DB faster
   backup_window           = "03:00-06:00"
   deletion_protection     = false
   engine                  = "postgres"
@@ -21,7 +21,7 @@ module "rds_postgres" {
   identifier              = "fibo-web-app"
   instance_class          = "db.t3.small"
   maintenance_window      = "Mon:00:00-Mon:03:00"
-  name                    = "postgres"  # database name
+  name                    = "postgres" # database name
   password                = "postgres_password"
   port                    = "5432"
   skip_final_snapshot     = true
