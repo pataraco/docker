@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: echo-server
+  labels:
+    app: tester
+  namespace: testing
+spec:
+  containers:
+    - name: client
+      # image: k8s.gcr.io/echoserver:1.10
+      image: gcr.io/google_containers/echoserver:1.4
+      ports:
+        - containerPort: 80
