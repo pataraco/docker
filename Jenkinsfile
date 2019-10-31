@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('build') {
             // environment {
-            //     ATONG_PUB_SSH = credentials('ATONG_PUB_SSH')
+            //     PUB_SSH = credentials('PUB_SSH')
             // }
             steps {
                 echo 'Building...'
@@ -15,8 +15,8 @@ pipeline {
                     date
                 '''
                 /* sh 'python --version' */ /* python not found in Alpine docker image */
-                /* sh 'echo "${env.ATONG_PUB_SSH}"' */
-                // sh 'echo "$ATONG_PUB_SSH"'
+                /* sh 'echo "${env.PUB_SSH}"' */
+                // sh 'echo "$PUB_SSH"'
             }
         }
         stage('test') {
