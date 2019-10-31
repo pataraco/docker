@@ -1,9 +1,10 @@
 # docker and kubernetes
 
 ## purpose
- learning, gaining knowledge, honing expertise, investigating technology,
- researching methods, testing functionality, practicing deployments,
- improving skills, yadda, yadda, yadda, etc.
+
+learning, gaining knowledge, honing expertise, investigating technology,
+researching methods, testing functionality, practicing deployments,
+improving skills, yadda, yadda, yadda, etc.
 
 ## description
 
