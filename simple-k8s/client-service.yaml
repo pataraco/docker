@@ -8,6 +8,6 @@ spec:
   ports:
     - port: 80
       targetPort: 3000
-      # nodePort: 31515
+      # nodePort: 31515  # automatically assign a port
   selector:
     component: web
