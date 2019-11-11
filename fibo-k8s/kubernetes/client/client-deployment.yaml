@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client
+  namespace: fibo
+  labels:
+    component: client
+    tier: web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      component: client
+  template:
+    metadata:
+      labels:
+        component: client
+        tier: web
+    spec:
+      containers:
+        - name: client
+          image: pataraco/fibo-web-app-client
+          ports:
+            - containerPort: 3000

@@ -1,0 +1,110 @@
+pipeline {
+    agent any
+    stages {
+        stage('info') {
+            steps {
+                echo "git environment variables..."
+                echo "  GIT_BRANCH $GIT_BRANCH"
+                echo "  GIT_URL $GIT_URL"
+                echo "  BRANCH_NAME $BRANCH_NAME"
+                sh 'env | grep GIT'
+            }
+        }
+        stage('build (dev)') {
+            steps {
+                echo "Building (dev)..."
+                echo "React Client..."
+                // sh '''
+                //     cd fibo-web
+                //     docker build -t pataraco/fibo-web-app-client:dev -f client/Dockerfile.dev client
+                // '''
+                sh '''
+                    cd fibo-web/client
+                    docker build -t pataraco/fibo-web-app-client:dev -f Dockerfile.dev .
+                '''
+                echo "TODO: Build others for testing purposes..."
+            }
+        }
+        stage('test') {
+            steps {
+                echo "Testing..."
+
+                echo "AWS access test(s)..."
+                sh '/usr/local/bin/aws sts get-caller-identity'
+
+                echo "AWS Elastic Beanstalk access/init test(s)..."
+                sh '''
+                   cd fibo-web
+                   if [ ! -e .elasticbeanstalk/config.yml ]; then
+                      /usr/local/bin/eb init fibo-web-app -p docker-18.06.1-ce -r us-east-1 --profile jenkins
+                   fi
+                   /usr/local/bin/eb status
+                '''
+
+                echo "React Client test(s)..."
+                timeout(time: 3, unit: 'MINUTES') {
+                    retry(5) {
+                        sh 'docker run -e CI=true pataraco/fibo-web-app-client:dev npm test -- --coverage'
+                    }
+                }
+
+                echo "TODO: Nginx server test(s)..."
+                echo "TODO: Express server test(s)..."
+                echo "TODO: Redis worker test(s)..."
+            }
+        }
+        stage('build (deploy)') {
+            steps {
+                echo "Building Images..."
+                sh '''
+                    cd fibo-web
+                    docker build -t pataraco/fibo-web-app-client:latest client
+                    docker build -t pataraco/fibo-web-app-server:latest server
+                    docker build -t pataraco/fibo-web-app-nginx:latest nginx
+                    docker build -t pataraco/fibo-web-app-worker:latest worker
+                '''
+                echo "Pushing Images (Docker Hub)..."
+                sh '''
+                    docker login --username $DOCKER_USERNAME --password-stdin <<< $DOCKER_PASSWORD
+                    docker push pataraco/fibo-web-app-client:latest
+                    docker push pataraco/fibo-web-app-server:latest
+                    docker push pataraco/fibo-web-app-nginx:latest
+                    docker push pataraco/fibo-web-app-worker:latest
+                '''
+            }
+        }
+        stage('deploy (staging)') {
+            when { branch 'staging' }
+            steps {
+                echo "Deploying Staging..."
+                echo "TODO: Correctly configure -> Deploying Staging..."
+            }
+        }
+        stage('deploy (production)') {
+            when {
+                branch 'master'
+            }
+            steps {
+                echo "Deploying Production..."
+                sh 'cd fibo-web; /usr/local/bin/eb deploy fibo-web-app-env'
+            }
+        }
+    }
+    post {
+        always {    /* this will always run */
+            echo "All done!  8)"
+        }
+        success {    /* runs when successful */
+            echo "Pipeline succeeded!  :)"
+        }
+        unstable {    /*  runs when marked as unstable */
+            echo "Pipeline is unstable.  :/"
+        }
+        failure {    /* runs if failed */
+            echo "Pipeline failed!  :("
+        }
+        changed {    /* runs if state of Pipeline has changed, e.g. previously failed, but now succeeded */
+            echo "Pipeline status changed.  :|"
+        }
+    }
+}

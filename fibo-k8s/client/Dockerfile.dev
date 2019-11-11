@@ -1,0 +1,21 @@
+# start with alpine (base) image
+FROM node:alpine
+
+# set working directory to not conflict
+WORKDIR /var/local/app
+
+# copy just the package file
+# eliminates need to re-run 'npm install' unless changed
+COPY package.json .
+
+# install dependencies
+# creates /var/local/app/node_modules
+RUN npm install
+
+# copy remaining config files over
+# note: remapped by docker-compose, not really needed, but saved for reference
+COPY . .
+
+# tell the image to run the server when it starts as a container
+CMD ["npm", "run", "start"]
+# or 'CMD ["npm", "start']' - same thang

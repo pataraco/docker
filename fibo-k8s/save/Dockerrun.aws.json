@@ -1,0 +1,83 @@
+{
+  "AWSEBDockerrunVersion": "2",
+  "containerDefinitions": [
+    {
+      "name": "fibo-web-client",
+      "image": "pataraco/fibo-web-app-client",
+      "essential": false,
+      "hostname": "fibo-client",
+      "memory": 256
+    },
+    {
+      "name": "fibo-web-nginx",
+      "image": "pataraco/fibo-web-app-nginx",
+      "essential": true,
+      "hostname": "fibo-nginx",
+      "links": [
+        "fibo-web-client",
+        "fibo-web-server"
+      ],
+      "memory": 256,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ]
+    },
+    {
+      "name": "fibo-web-server",
+      "image": "pataraco/fibo-web-app-server",
+      "environment": [
+        {
+          "name": "PGDATABASE",
+	  "value": "postgres"
+        },
+        {
+          "name": "PGHOST",
+	  "value": "fibo-web-app.cmylwpbrgtns.us-east-1.rds.amazonaws.com"
+        },
+        {
+          "name": "PGPASSWORD",
+	  "value": "postgres_password"
+        },
+        {
+          "name": "PGPORT",
+	  "value": "5432"
+        },
+        {
+          "name": "PGUSER",
+	  "value": "postgres"
+        },
+        {
+          "name": "REDIS_HOST",
+	  "value": "fibo-web-app.h1rska.0001.use1.cache.amazonaws.com"
+        },
+        {
+          "name": "REDIS_PORT",
+	  "value": "6379"
+        }
+      ],
+      "essential": false,
+      "hostname": "fibo-server-api",
+      "memory": 256
+    },
+    {
+      "name": "fibo-web-worker",
+      "image": "pataraco/fibo-web-app-worker",
+      "environment": [
+        {
+          "name": "REDIS_HOST",
+	  "value": "fibo-web-app.h1rska.0001.use1.cache.amazonaws.com"
+        },
+        {
+          "name": "REDIS_PORT",
+	  "value": "6379"
+        }
+      ],
+      "essential": false,
+      "hostname": "fibo-worker",
+      "memory": 256
+    }
+  ]
+}

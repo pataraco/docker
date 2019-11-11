@@ -1,0 +1,47 @@
+---
+# create a unnecessarily complicated fibonacci app
+version: '3'                  # of docker compose
+services:                     # type of container
+  postgres-server:
+    image: postgres:latest
+  redis-server:
+    image: redis:latest
+  nginx-server:
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - 8085:80
+  fibo-web-server:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./server
+    environment:
+      - PGDATABASE=postgres
+      - PGHOST=postgres-server
+      - PGPASSWORD=postgres_password
+      - PGPORT=5432
+      - PGUSER=postgres
+      - REDIS_HOST=redis-server
+      - REDIS_PORT=6379
+    volumes:
+      - /var/local/app/node_modules  # use container's volume
+      - ./server:/var/local/app      # map current to container's
+  fibo-web-client:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+    volumes:
+      - /var/local/app/node_modules  # use container's volume
+      - ./client:/var/local/app      # map current to container's
+  fibo-worker:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./worker
+    environment:
+      - REDIS_HOST=redis-server
+      - REDIS_PORT=6379
+    volumes:
+      - /var/local/app/node_modules  # use container's volume
+      - ./worker:/var/local/app      # map current to container's
