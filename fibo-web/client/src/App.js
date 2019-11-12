@@ -20,7 +20,7 @@ class App extends Component {
                 Created with: <a href="https://www.terraform.io/">Terraform</a> & <a href="https://jenkins.io/">Jenkins</a> |
                 Hosted on: <a href="https://aws.amazon.com/">AWS</a> |
                 Training/Project from: <a href="https://www.udemy.com/course/docker-and-kubernetes-the-complete-guide/">Udemy</a> |
-                Source files: <a href="https://github.com/pataraco/docker/tree/master/fibo-web">GitHub</a>
+                Source files: <a href="https://github.com/pataraco/d4r-k8s/tree/master/fibo-web">GitHub</a>
               )</font>
             </h1>
             | <Link to="/">Home</Link> |
