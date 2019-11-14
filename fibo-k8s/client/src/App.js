@@ -12,29 +12,30 @@ class App extends Component {
         <div className="App">
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
-            <h1 className="App-title">
-              Welcome to Fibonacci Calculator!
-              <br/>
-              <font size="3">(
-                Powered by: <a href="https://reactjs.org/">React</a> |
-                Created with: <a href="https://www.terraform.io/">Terraform</a> & <a href="https://jenkins.io/">Jenkins</a> |
-                Hosted on: <a href="https://aws.amazon.com/">AWS</a> |
-                Training/Project from: <a href="https://www.udemy.com/course/docker-and-kubernetes-the-complete-guide/">Udemy</a> |
-                Source files: <a href="https://github.com/pataraco/docker/tree/master/fibo-web">GitHub</a>
-              )</font>
-            </h1>
+            <h1 className="App-title"> Welcome to Fibonacci Calculator! </h1>
             | <Link to="/">Home</Link> |
             | <Link to="/otherpage">Another Page</Link> |
-            <hr color="blue" size="3" width="50%"/>
+              <br/>
           </header>
           <div>
-            <br/>
             <br/>
             <Route exact path="/" component={Fib} />
             <Route path="/otherpage" component={OtherPage} />
           </div>
           <footer>
-            <p><font size="2">(Version: 0.0.1)</font></p>
+            <hr color="blue" size="1" width="50%"/>
+	    <h2>
+              <font size="2">
+                Powered by: <a href="https://reactjs.org/">React</a> |
+                Created with: <a href="https://kubernetes.io/">Kubernetes</a>, <a href="https://www.terraform.io/">Terraform (WIP)</a> & <a href="https://jenkins.io/">Jenkins (WIP)</a>
+              <br/>
+                Hosted on: <a href="https://aws.amazon.com/">AWS</a> |
+                Training/Project from: <a href="https://www.udemy.com/course/docker-and-kubernetes-the-complete-guide/">Udemy</a> |
+                Source files: <a href="https://github.com/pataraco/d4r-k8s/tree/master/fibo-k8s">GitHub</a>
+              </font>
+	    </h2>
+            <hr color="blue" size="1" width="50%"/>
+            <p><font size="2">(Version: 0.1.1)</font></p>
           </footer>
         </div>
       </Router>
