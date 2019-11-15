@@ -1,14 +1,22 @@
-# fibonacci web server app
+# fibonacci web server app (kubernetes)
 
 **NOTE: WIP** This README is **NOT** complete!
 
 - apply the namespace config
 - change the password in the postgres secrets config
 - apply the other configs
-- go to kubenetes/ingress-nginx github and follow instructions for deployment
+- go to kubenetes/ingress-nginx github and follow [instructions](https://kubernetes.github.io/ingress-nginx/deploy/) for deployment
+- set up the [dashboard](https://github.com/kubernetes/dashboard)
+   - local set up
+
+   ```
+   args:
+     - --auto-generate-certificates
+     - --enable-skip-login
+     - --disable-settings-authorizer
+  ```
 
 **THE NOTES BELOW ARE OLD**
-
 
 Messing around with Docker some more.
 
