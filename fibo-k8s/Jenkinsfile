@@ -15,12 +15,12 @@ pipeline {
                 echo "Building (dev)..."
                 echo "React Client..."
                 // sh '''
-                //     cd fibo-web
-                //     docker build -t pataraco/fibo-web-app-client:dev -f client/Dockerfile.dev client
+                //     cd fibo-k8s/client
+                //     docker build -t pataraco/fibo-k8s-app-client:dev -f Dockerfile.dev .
                 // '''
                 sh '''
-                    cd fibo-web/client
-                    docker build -t pataraco/fibo-web-app-client:dev -f Dockerfile.dev .
+                    cd fibo-k8s
+                    docker build -t pataraco/fibo-k8s-app-client:dev -f client/Dockerfile.dev client
                 '''
                 echo "TODO: Build others for testing purposes..."
             }
@@ -34,9 +34,9 @@ pipeline {
 
                 echo "AWS Elastic Beanstalk access/init test(s)..."
                 sh '''
-                   cd fibo-web
+                   cd fibo-k8s
                    if [ ! -e .elasticbeanstalk/config.yml ]; then
-                      /usr/local/bin/eb init fibo-web-app -p docker-18.06.1-ce -r us-east-1 --profile jenkins
+                      /usr/local/bin/eb init fibo-k8s-app -p docker-18.06.1-ce -r us-east-1 --profile jenkins
                    fi
                    /usr/local/bin/eb status
                 '''
@@ -44,7 +44,7 @@ pipeline {
                 echo "React Client test(s)..."
                 timeout(time: 3, unit: 'MINUTES') {
                     retry(5) {
-                        sh 'docker run -e CI=true pataraco/fibo-web-app-client:dev npm test -- --coverage'
+                        sh 'docker run -e CI=true pataraco/fibo-k8s-app-client:dev npm test -- --coverage'
                     }
                 }
 
@@ -57,19 +57,19 @@ pipeline {
             steps {
                 echo "Building Images..."
                 sh '''
-                    cd fibo-web
-                    docker build -t pataraco/fibo-web-app-client:latest client
-                    docker build -t pataraco/fibo-web-app-server:latest server
-                    docker build -t pataraco/fibo-web-app-nginx:latest nginx
-                    docker build -t pataraco/fibo-web-app-worker:latest worker
+                    cd fibo-k8s
+                    docker build -t pataraco/fibo-k8s-app-client:latest client
+                    docker build -t pataraco/fibo-k8s-app-server:latest server
+                    docker build -t pataraco/fibo-k8s-app-nginx:latest nginx
+                    docker build -t pataraco/fibo-k8s-app-worker:latest worker
                 '''
                 echo "Pushing Images (Docker Hub)..."
                 sh '''
                     docker login --username $DOCKER_USERNAME --password-stdin <<< $DOCKER_PASSWORD
-                    docker push pataraco/fibo-web-app-client:latest
-                    docker push pataraco/fibo-web-app-server:latest
-                    docker push pataraco/fibo-web-app-nginx:latest
-                    docker push pataraco/fibo-web-app-worker:latest
+                    docker push pataraco/fibo-k8s-app-client:latest
+                    docker push pataraco/fibo-k8s-app-server:latest
+                    docker push pataraco/fibo-k8s-app-nginx:latest
+                    docker push pataraco/fibo-k8s-app-worker:latest
                 '''
             }
         }
@@ -86,7 +86,7 @@ pipeline {
             }
             steps {
                 echo "Deploying Production..."
-                sh 'cd fibo-web; /usr/local/bin/eb deploy fibo-web-app-env'
+                sh 'cd fibo-k8s; /usr/local/bin/eb deploy fibo-k8s-app-env'
             }
         }
     }
