@@ -1,0 +1,22 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  # For DNS reasons, must start with alphabetic char
+  # name: postgres
+  name: db
+  namespace: voting-app
+  labels:
+    app: voting-app
+    name: postgres-service
+spec:
+  ports:
+  # - port: 8002
+  - port: 5432
+    # protocol: TCP
+    targetPort: 5432
+  selector:
+    # app: postgres
+    app: voting-app
+    name: postgres-pod
+  type: ClusterIP

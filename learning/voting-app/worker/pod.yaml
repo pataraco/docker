@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: worker
+  namespace: voting-app
+  labels:
+    # app: worker
+    app: voting-app
+    name: worker-pod
+spec:
+  containers:
+    - image: kodekloud/examplevotingapp_worker:v1
+      name: worker
+#     ports:
+#       - containerPort: 8000
