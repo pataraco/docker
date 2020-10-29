@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  # annotations  <map[string]string>
+  # clusterName  <string>
+  # labels  <map[string]string>
+  name: ingress
+  namespace: ingress-space
+spec:
+  # clusterIP  <string>
+  # externalIPs  <[]string>
+  # externalName  <string>
+  # externalTrafficPolicy  <string>
+  ports:
+    - nodePort: 30080
+      # appProtocol  <string>
+      # name:
+      port: 80
+      # protocol:
+      targetPort: 80
+  selector:
+    name: nginx-ingress
+    # sessionAffinity  <string>
+    # sessionAffinityConfig  <Object>
+    #  clientIP  <Object>
+    #     timeoutSeconds  <integer>
+  type: NodePort

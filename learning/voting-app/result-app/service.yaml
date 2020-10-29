@@ -10,11 +10,11 @@ metadata:
     name: result-app-service
 spec:
   ports:
-  # - port: 8004
-  - port: 80
-    # protocol: TCP
-    targetPort: 80
-    nodePort: 30020
+    # - port: 8004
+    - port: 80
+      # protocol: TCP
+      targetPort: 80
+      nodePort: 30020
   selector:
     # app: result-app
     app: voting-app

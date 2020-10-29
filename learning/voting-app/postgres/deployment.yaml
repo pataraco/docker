@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: voting-app
+  labels:
+    app: voting-app
+    name: postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: voting-app
+      name: postgres-pod
+  template:
+    metadata:
+      labels:
+        app: voting-app
+        name: postgres-pod
+    spec:
+      containers:
+        - image: postgres
+          name: postgres
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_USER
+              value: postgres
+#     nodeSelector:
+#       kubernetes.io/role: worker

@@ -10,10 +10,10 @@ metadata:
     name: redis-service
 spec:
   ports:
-  # - port: 8001
-  - port: 6379
-    # protocol: TCP
-    targetPort: 6379
+    # - port: 8001
+    - port: 6379
+      # protocol: TCP
+      targetPort: 6379
   selector:
     # app: redis
     app: voting-app

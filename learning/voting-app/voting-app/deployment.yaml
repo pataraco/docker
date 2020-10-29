@@ -6,20 +6,26 @@ metadata:
   namespace: voting-app
   labels:
     app: voting-app
+    name: voting-app-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: voting-app
+      name: voting-app-pod
   template:
     metadata:
       labels:
         app: voting-app
+        name: voting-app-pod
     spec:
       containers:
-      - image: kodekloud/examplevotingapp_vote:v1
-        name: voting-app
-        ports:
-          - containerPort: 80
+        - image: kodekloud/examplevotingapp_vote:v1
+          name: voting-app
+          ports:
+            - containerPort: 80
 #     nodeSelector:
 #       kubernetes.io/role: worker
+#       disktype: ssd
+#     nodeName: foo-node # schedule pod to specific node
+

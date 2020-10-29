@@ -11,10 +11,10 @@ metadata:
     name: postgres-service
 spec:
   ports:
-  # - port: 8002
-  - port: 5432
-    # protocol: TCP
-    targetPort: 5432
+    # - port: 8002
+    - port: 5432
+      # protocol: TCP
+      targetPort: 5432
   selector:
     # app: postgres
     app: voting-app

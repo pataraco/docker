@@ -1,0 +1,37 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  labels:
+  name: app-ingress
+  namespace: app-space
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+
+spec:
+  backend:
+    # resource:
+    #    name: default
+    serviceName: default-http-backend
+    servicePort: 80
+  # ingressClassName  <string>
+  rules:
+    - host:
+      http:
+        paths:
+          - backend:
+              # resource:
+              #    apiGroup  <string>
+              #    kind  <string>
+              #    name  <string>
+              serviceName: wear-service
+              servicePort: 8080
+            path: /wear
+          - backend:
+              # resource:
+              #    apiGroup  <string>
+              #    kind  <string>
+              #    name  <string>
+              serviceName: video-service
+              servicePort: 8080
+            path: /watch
